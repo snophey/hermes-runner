@@ -15,9 +15,9 @@ RUN curl -s "https://get.sdkman.io" | bash && \
     echo 'export PATH="/home/hermes/.duckdb/cli/1.4.5":$PATH' >> /home/hermes/.bashrc
 
 RUN python3 -m venv /home/hermes/.venv && \
-    echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc && \
-    chmod +x /home/hermes/.venv/bin/activate && /home/hermes/.venv/bin/activate && \
-    pip install s3cmd
+    /home/hermes/.venv/bin/pip install s3cmd
+
+RUN echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc
 
 USER root
 
