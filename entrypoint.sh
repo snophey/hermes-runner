@@ -21,8 +21,8 @@ else
   echo "Existing home directory at ${RUNTIME_HOME}, skipping copy."
 fi
 
-# Update passwd to point user home to /home/hermes
-sed -i "s|^hermes:.*:.*:.*:.*:.*|hermes:x:$(id -u hermes):$(id -g hermes):Hermes User:${RUNTIME_HOME}:/bin/bash|" /etc/passwd
+# Update user home directory to /home/hermes
+usermod -d "${RUNTIME_HOME}" hermes
 
 echo "SSH keys configured..."
 mkdir -p "${RUNTIME_HOME}/.ssh"
