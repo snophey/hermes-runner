@@ -18,8 +18,8 @@ if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
   chown -R hermes:hermes "${RUNTIME_HOME}"
   echo "Home directory populated from build-time image."
 
-  echo "Setting up hermes user tools..."
-
+  echo "Setting up hermes user tools as hermes..."
+  su - hermes -c 'bash -s' <<'SETUP_SCRIPT'
   # SDKMAN
   if [ ! -d "/home/hermes/.sdkman" ]; then
     echo "Installing SDKMAN..."
@@ -54,6 +54,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
   fi
 
   echo "User tools setup complete."
+SETUP_SCRIPT
 else
   echo "Existing home directory at ${RUNTIME_HOME}, skipping copy."
 fi
