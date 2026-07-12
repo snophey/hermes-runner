@@ -16,7 +16,7 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 
 RUN python3 -m venv /home/hermes/.venv && \
     echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc && \
-    source /home/hermes/.venv/bin/activate && \
+    chmod +x /home/hermes/.venv/bin/activate && /home/hermes/.venv/bin/activate && \
     pip install s3cmd
 
 USER root
