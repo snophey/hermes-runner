@@ -80,7 +80,7 @@ echo "SSH keys configured successfully."
 
 if [ -n "${GITHUB_ACCESS_TOKEN:-}" ]; then
   echo "Logging in to GitHub as hermes..."
-  su - hermes -c 'bash -s' <<GITHUB_LOGIN
+  su - hermes <<GITHUB_LOGIN
   echo "$GITHUB_ACCESS_TOKEN" | gh auth login --with-token
   gh auth setup-git
 GITHUB_LOGIN
