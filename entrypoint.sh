@@ -6,12 +6,30 @@ if [ -z "${ALLOWED_KEYS:-}" ]; then
   exit 1
 fi
 
-echo "Setting up SSH keys for hermes user..."
-mkdir -p /home/hermes/.ssh
-echo "$ALLOWED_KEYS" > /home/hermes/.ssh/authorized_keys
-chmod 600 /home/hermes/.ssh/authorized_keys
-chmod go-w /home/hermes/.ssh
-chown -R hermes:hermes /home/hermes/.ssh
+BUILD_HOME="/opt/hermes"
+RUNTIME_HOME="/home/hermes"
+
+echo "Setting up home directory at ${RUNTIME_HOME}..."
+
+# If /home/hermes is empty (fresh volume mount), copy from build-time home
+if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
+  echo "Fresh volume mount detected — copying build-time home contents..."
+  cp -a "${BUILD_HOME}/." "${RUNTIME_HOME}/"
+  chown -R hermes:hermes "${RUNTIME_HOME}"
+  echo "Home directory populated from build-time image."
+else
+  echo "Existing home directory at ${RUNTIME_HOME}, skipping copy."
+fi
+
+# Update user home directory to /home/hermes
+usermod -d "${RUNTIME_HOME}" hermes
+
+echo "SSH keys configured..."
+mkdir -p "${RUNTIME_HOME}/.ssh"
+echo "$ALLOWED_KEYS" > "${RUNTIME_HOME}/.ssh/authorized_keys"
+chmod 600 "${RUNTIME_HOME}/.ssh/authorized_keys"
+chmod go-w "${RUNTIME_HOME}/.ssh"
+chown -R hermes:hermes "${RUNTIME_HOME}/.ssh"
 echo "SSH keys configured successfully."
 
 SSH_HOST_KEYS_DIR="/etc/ssh/ssh_host_keys"
