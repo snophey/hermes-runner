@@ -38,16 +38,16 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
     echo "SDKMAN already installed."
   fi
 
-  # NVM
+  # NVM + opencode-ai (nested bash session to source .bashrc)
   if [ ! -d "/home/hermes/.nvm" ]; then
     echo "Installing NVM..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
-    /home/hermes/.nvm/nvm.sh
+  fi
+  su - hermes -c 'bash -s' <<'NVM_SCRIPT'
+    source ~/.bashrc
     nvm install 24
     npm install -g opencode-ai
-  else
-    echo "NVM already installed."
-  fi
+  NVM_SCRIPT
 
   # DuckDB
   if [ ! -d "/home/hermes/.duckdb" ]; then
