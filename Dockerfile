@@ -1,7 +1,8 @@
 FROM ubuntu:26.04
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata && \
-    apt-get update && \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
     apt-get install -y --no-install-recommends --fix-missing openssh-server curl python3 python3-dev build-essential zip unzip && \
     rm -rf /var/lib/apt/lists/*
 
