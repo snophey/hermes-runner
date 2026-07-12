@@ -3,7 +3,7 @@ FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends --fix-missing openssh-server curl python3 python3-dev python3-pip python3-venv build-essential ca-certificates zip unzip && \
+    apt-get install -y --no-install-recommends --fix-missing openssh-server curl python3 python3-dev python3-pip python3-venv python3-full build-essential ca-certificates zip unzip && \
     rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -d /home/hermes -s /bin/bash hermes
