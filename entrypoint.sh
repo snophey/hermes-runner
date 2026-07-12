@@ -53,7 +53,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
   if [ ! -d "/home/hermes/.duckdb" ]; then
     echo "Installing DuckDB..."
     curl https://install.duckdb.org | DUCKDB_VERSION=1.4.5 sh
-    echo 'export PATH="\$PATH:/home/hermes/.duckdb/cli/1.4.5/"' >> /home/hermes/.bashrc
+    echo 'export PATH="$PATH:/home/hermes/.duckdb/cli/1.4.5/"' >> /home/hermes/.bashrc
   else
     echo "DuckDB already installed."
   fi
