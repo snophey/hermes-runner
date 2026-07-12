@@ -24,7 +24,11 @@ if [ -z "$(ls -A "$SSH_HOST_KEYS_DIR" 2>/dev/null)" ]; then
   ssh-keygen -t rsa -f "$SSH_HOST_KEYS_DIR/ssh_host_rsa_key" -N ""
   echo "SSH host keys generated successfully."
 else
-  echo "SSH host keys already exist, skipping generation."
+  echo "SSH host keys already exist, fixing permissions..."
+  chmod 600 "$SSH_HOST_KEYS_DIR/ssh_host_ed25519_key"
+  chmod 600 "$SSH_HOST_KEYS_DIR/ssh_host_ecdsa_key"
+  chmod 600 "$SSH_HOST_KEYS_DIR/ssh_host_rsa_key"
+  echo "SSH host key permissions fixed."
 fi
 
 SSHD_PORT="${SSH_PORT:-22}"
