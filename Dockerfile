@@ -22,7 +22,10 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 RUN echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/no_password.conf && \
-    echo "AllowUsers hermes" > /etc/ssh/sshd_config.d/only_hermes.conf
+    echo "AllowUsers hermes" > /etc/ssh/sshd_config.d/only_hermes.conf && \
+    echo "HostKey /etc/ssh/ssh_host_keys/ssh_host_ed25519_key" >> /etc/ssh/sshd_config.d/only_hermes.conf && \
+    echo "HostKey /etc/ssh/ssh_host_keys/ssh_host_ecdsa_key" >> /etc/ssh/sshd_config.d/only_hermes.conf && \
+    echo "HostKey /etc/ssh/ssh_host_keys/ssh_host_rsa_key" >> /etc/ssh/sshd_config.d/only_hermes.conf
 
 EXPOSE 22
 
