@@ -42,6 +42,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
   if [ ! -d "/home/hermes/.nvm" ]; then
     echo "Installing NVM..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
+    /home/hermes/.nvm/nvm.sh
     nvm install 24
     npm install -g opencode-ai
   else
