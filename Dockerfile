@@ -14,7 +14,7 @@ RUN curl -s "https://get.sdkman.io" | bash && \
     curl https://install.duckdb.org | DUCKDB_VERSION=1.4.5 sh && \
     echo 'export PATH="/home/hermes/.duckdb/cli/1.4.5":$PATH' >> /home/hermes/.bashrc
 
-RUN /home/hermes/.nvm/nvm.sh install 24 && npm install -g opencode-ai
+RUN /home/hermes/.nvm/nvm.sh install 24 && /home/hermes/.nvm/nvm.sh npm install -g opencode-ai
 
 RUN python3 -m venv /home/hermes/.venv && \
     /home/hermes/.venv/bin/pip install s3cmd
