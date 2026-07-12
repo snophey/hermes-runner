@@ -79,9 +79,11 @@ chown -R hermes:hermes "${RUNTIME_HOME}/.ssh"
 echo "SSH keys configured successfully."
 
 if [ -n "${GITHUB_ACCESS_TOKEN:-}" ]; then
-  echo "Logging in to GitHub..."
+  echo "Logging in to GitHub as hermes..."
+  su - hermes -c 'bash -s' <<GITHUB_LOGIN
   echo "$GITHUB_ACCESS_TOKEN" | gh auth login --with-token
   gh auth setup-git
+GITHUB_LOGIN
   echo "GitHub login successful."
 else
   echo "WARNING: GITHUB_ACCESS_TOKEN is not set, skipping GitHub login."
