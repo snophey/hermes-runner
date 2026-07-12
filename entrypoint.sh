@@ -42,11 +42,30 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
   if [ ! -d "/home/hermes/.nvm" ]; then
     echo "Installing NVM..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
-    /home/hermes/.nvm/nvm.sh
-    nvm install 24
-    npm install -g opencode-ai
   else
     echo "NVM already installed."
+  fi
+
+  # Node.js
+  if [ ! -f "/home/hermes/.nvm/versions/node/v24/bin/node" ]; then
+    echo "Installing Node.js..."
+    su - hermes -c 'bash -s' <<'NODEJS_INSTALL'
+    source /home/hermes/.nvm/nvm.sh
+    nvm install 24
+NODEJS_INSTALL
+  else
+    echo "Node.js already installed."
+  fi
+
+  # OpenCode AI
+  if ! command -v opencode-ai &>/dev/null; then
+    echo "Installing OpenCode AI..."
+    su - hermes -c 'bash -s' <<'OPENCODE_INSTALL'
+    source /home/hermes/.nvm/nvm.sh
+    npm install -g opencode-ai
+OPENCODE_INSTALL
+  else
+    echo "OpenCode AI already installed."
   fi
 
   # DuckDB
