@@ -17,7 +17,17 @@ if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
   cp -a "${BUILD_HOME}/." "${RUNTIME_HOME}/"
   chown -R hermes:hermes "${RUNTIME_HOME}"
   echo "Home directory populated from build-time image."
+else
+  echo "Existing home directory at ${RUNTIME_HOME}, skipping copy."
+fi
 
+# Update user home directory to /home/hermes (must be done before su - hermes)
+usermod -d "${RUNTIME_HOME}" hermes
+
+if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
+   [ -z "$(ls -A "${RUNTIME_HOME}/.nvm" 2>/dev/null)" ] || \
+   [ -z "$(ls -A "${RUNTIME_HOME}/.duckdb" 2>/dev/null)" ] || \
+   [ -z "$(ls -A "${RUNTIME_HOME}/.venv" 2>/dev/null)" ]; then
   echo "Setting up hermes user tools as hermes..."
   su - hermes -c 'bash -s' <<'SETUP_SCRIPT'
   # SDKMAN
@@ -49,6 +59,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
     echo "Creating Python venv and installing s3cmd..."
     python3 -m venv /home/hermes/.venv
     /home/hermes/.venv/bin/pip install s3cmd
+    echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc
   else
     echo "Python venv already created."
   fi
@@ -56,11 +67,8 @@ if [ -z "$(ls -A "${RUNTIME_HOME}" 2>/dev/null)" ]; then
   echo "User tools setup complete."
 SETUP_SCRIPT
 else
-  echo "Existing home directory at ${RUNTIME_HOME}, skipping copy."
+  echo "All hermes user tools already installed, skipping setup."
 fi
-
-# Update user home directory to /home/hermes
-usermod -d "${RUNTIME_HOME}" hermes
 
 echo "SSH keys configured..."
 mkdir -p "${RUNTIME_HOME}/.ssh"
