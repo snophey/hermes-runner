@@ -9,12 +9,15 @@ RUN apt-get update && \
 RUN useradd -m -d /home/hermes -s /bin/bash hermes
 
 USER hermes
+
 RUN curl -s "https://get.sdkman.io" | bash && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash && \
     curl https://install.duckdb.org | DUCKDB_VERSION=1.4.5 sh && \
     echo 'export PATH="/home/hermes/.duckdb/cli/1.4.5":$PATH' >> /home/hermes/.bashrc
 
 RUN /home/hermes/.nvm/nvm.sh install 24 && /home/hermes/.nvm/nvm.sh npm install -g opencode-ai
+
+RUN mkdir /home/hermes/.config
 
 RUN python3 -m venv /home/hermes/.venv && \
     /home/hermes/.venv/bin/pip install s3cmd
