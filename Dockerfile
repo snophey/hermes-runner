@@ -10,7 +10,6 @@ RUN useradd -m -d /home/hermes -s /bin/bash hermes
 
 USER hermes
 RUN curl -s "https://get.sdkman.io" | bash && \
-    bash -c "source /home/hermes/.sdkman/bin/sdkman-init.sh && sdk selfupdate" && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 
 USER root
