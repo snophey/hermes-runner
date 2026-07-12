@@ -49,7 +49,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
   # Node.js
   if [ ! -f "/home/hermes/.nvm/versions/node/v24/bin/node" ]; then
     echo "Installing Node.js..."
-    su - hermes -c 'bash -s' <<'NODEJS_INSTALL'
+    bash -s <<'NODEJS_INSTALL'
     source /home/hermes/.nvm/nvm.sh
     nvm install 24
 NODEJS_INSTALL
@@ -60,7 +60,7 @@ NODEJS_INSTALL
   # OpenCode AI
   if ! command -v opencode-ai &>/dev/null; then
     echo "Installing OpenCode AI..."
-    su - hermes -c 'bash -s' <<'OPENCODE_INSTALL'
+    bash -s <<'OPENCODE_INSTALL'
     source /home/hermes/.nvm/nvm.sh
     npm install -g opencode-ai
 OPENCODE_INSTALL
