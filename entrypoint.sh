@@ -59,6 +59,7 @@ if [ -z "$(ls -A "${RUNTIME_HOME}/.sdkman" 2>/dev/null)" ] || \
     echo "Creating Python venv and installing s3cmd..."
     python3 -m venv /home/hermes/.venv
     /home/hermes/.venv/bin/pip install s3cmd
+    echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc
   else
     echo "Python venv already created."
   fi
