@@ -3,14 +3,21 @@ FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends --fix-missing openssh-server curl python3 python3-dev build-essential ca-certificates zip unzip && \
+    apt-get install -y --no-install-recommends --fix-missing openssh-server curl python3 python3-dev python3-pip python3-venv build-essential ca-certificates zip unzip && \
     rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -d /home/hermes -s /bin/bash hermes
 
 USER hermes
 RUN curl -s "https://get.sdkman.io" | bash && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash && \
+    curl https://install.duckdb.org | DUCKDB_VERSION=1.4.5 sh && \
+    echo 'export PATH="/home/hermes/.duckdb/cli/1.4.5":$PATH' >> /home/hermes/.bashrc
+
+RUN python3 -m venv /home/hermes/.venv && \
+    echo 'source /home/hermes/.venv/bin/activate' >> /home/hermes/.bashrc && \
+    source /home/hermes/.venv/bin/activate && \
+    pip install s3cmd
 
 USER root
 
