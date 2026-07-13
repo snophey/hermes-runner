@@ -57,6 +57,8 @@ NODEJS_INSTALL
     echo "Node.js already installed."
   fi
 
+  echo 'nvm use 24' >> /home/hermes/.bashrc
+
   # OpenCode AI
   if ! command -v opencode-ai &>/dev/null; then
     echo "Installing OpenCode AI..."
@@ -128,6 +130,9 @@ else
   chmod 600 "$SSH_HOST_KEYS_DIR/ssh_host_rsa_key"
   echo "SSH host key permissions fixed."
 fi
+
+su - hermes -c 'nohup opencode serve --port 8404 --hostname="0.0.0.0" > /tmp/opencode.log 2>&1 &'
+echo "OpenCode API server started on port 8404."
 
 SSHD_PORT="${SSH_PORT:-22}"
 echo "Starting sshd on port ${SSHD_PORT}..."
