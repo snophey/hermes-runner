@@ -60,12 +60,9 @@ NODEJS_INSTALL
   echo 'nvm use 24' >> /home/hermes/.bashrc
 
   # OpenCode AI
-  if ! command -v opencode-ai &>/dev/null; then
+  if ! command -v opencode &>/dev/null; then
     echo "Installing OpenCode AI..."
-    bash -s <<'OPENCODE_INSTALL'
-    source /home/hermes/.nvm/nvm.sh
-    npm install -g opencode-ai
-OPENCODE_INSTALL
+    curl -fsSL https://opencode.ai/install | bash
   else
     echo "OpenCode AI already installed."
   fi
@@ -137,4 +134,4 @@ echo "Starting sshd on port ${SSHD_PORT}..."
 
 /usr/sbin/sshd -p "$SSHD_PORT" &
 
-su - hermes -c '/bin/bash -c "source /home/hermes/.bashrc && opencode serve --port 8404"'
+su - hermes -c '/home/hermes/.opencode/bin/opencode serve --port 8404'
