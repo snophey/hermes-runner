@@ -137,4 +137,4 @@ echo "Starting sshd on port ${SSHD_PORT}..."
 
 /usr/sbin/sshd -p "$SSHD_PORT" &
 
-su - hermes -c '/bin/bash -c "opencode serve --port 8404"'
+su - hermes -c '/bin/bash -c "source /home/hermes/.bashrc && opencode serve --port 8404"'
