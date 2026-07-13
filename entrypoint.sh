@@ -57,6 +57,8 @@ NODEJS_INSTALL
     echo "Node.js already installed."
   fi
 
+  echo 'nvm use 24' >> /home/hermes/.bashrc
+
   # OpenCode AI
   if ! command -v opencode-ai &>/dev/null; then
     echo "Installing OpenCode AI..."
