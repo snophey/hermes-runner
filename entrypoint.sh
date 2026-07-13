@@ -129,7 +129,7 @@ else
   echo "SSH host key permissions fixed."
 fi
 
-su - hermes -c 'opencode serve --port 8404 --hostname="0.0.0.0" &'
+su - hermes -c 'nohup opencode serve --port 8404 --hostname="0.0.0.0" > /tmp/opencode.log 2>&1 &'
 echo "OpenCode API server started on port 8404."
 
 SSHD_PORT="${SSH_PORT:-22}"
