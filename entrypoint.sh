@@ -134,4 +134,4 @@ echo "Starting sshd on port ${SSHD_PORT}..."
 
 /usr/sbin/sshd -p "$SSHD_PORT" &
 
-su - hermes -c '/home/hermes/.opencode/bin/opencode serve --port 8404'
+su - hermes -c '/home/hermes/.opencode/bin/opencode serve --port 8404 --hostname 0.0.0.0'
